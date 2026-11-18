@@ -32,10 +32,11 @@ export default async function Story({params}) {
   const author = a.author?.trim() && a.author.trim() !== 'فريق التحرير' ? a.author : 'صحيفة '+siteName;
   const structured = {
     '@context':'https://schema.org', '@type':'NewsArticle',
-    headline:a.title, description:a.seo_description || a.summary, image:absoluteUrl(a.image),
+    headline:a.title, description:a.seo_description || a.summary,
+    image:[a.image,...(a.additional_images || []).map(photo=>photo.url)].map(url=>absoluteUrl(url) || url),
     citation:a.source_url,
     datePublished:a.published_at, inLanguage:'ar', articleSection:sections[a.category],
-    author:{'@type':a.author?.trim() ? 'Person':'Organization',name:author},
+    author:{'@type':a.author?.trim() && !/عكاظ|صحيفة/.test(a.author) ? 'Person':'Organization',name:author},
     publisher:{'@type':'Organization',name:siteName},
     mainEntityOfPage:absoluteUrl('/news/'+a.slug)
   };
@@ -51,6 +52,12 @@ export default async function Story({params}) {
       {a.image_credit && <p className="photo-credit">{a.image_credit}</p>}
       <ArticleActions title={a.title}/>
       <div className="reader-body">{a.body.split(/\n+/).filter(Boolean).map((p,i)=><p key={i}>{p}</p>)}</div>
+      {!!a.additional_images?.length && <section className="article-gallery" aria-label="صور الخبر">
+        {a.additional_images.map(photo=><figure key={photo.url}>
+          <img src={photo.url} alt={photo.caption || a.title} loading="lazy"/>
+          <figcaption>{photo.caption || a.title} — {a.source_name}</figcaption>
+        </figure>)}
+      </section>}
       {a.source_url && <aside className="article-source" aria-label="مصدر الخبر">
         <span>المصدر: <a href={a.source_url} target="_blank" rel="noopener noreferrer">{a.source_name || 'المصدر الأصلي'} ↗</a></span>
         {a.source_published_at && <small>تاريخ مادة المصدر: <Published story={{published_at:a.source_published_at}}/></small>}

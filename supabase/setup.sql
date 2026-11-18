@@ -19,7 +19,8 @@ create table public.articles (
   source_published_at timestamptz,
   image_credit text,
   seo_title text,
-  seo_description text
+  seo_description text,
+  additional_images jsonb not null default '[]'::jsonb check (jsonb_typeof(additional_images) = 'array')
 );
 
 create index articles_latest on public.articles (published_at desc);
