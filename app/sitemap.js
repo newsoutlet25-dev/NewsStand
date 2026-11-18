@@ -9,6 +9,8 @@ export default async function sitemap() {
   const articles = await listNews();
   return [
     {url:siteUrl},
+    {url:absoluteUrl('/about')},
+    {url:absoluteUrl('/privacy')},
     ...Object.keys(sections).map(section => ({url:absoluteUrl('/?section='+section)})),
     ...articles.map(article => ({url:absoluteUrl('/news/'+article.slug),lastModified:article.published_at}))
   ];
