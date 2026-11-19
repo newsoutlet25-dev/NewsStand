@@ -35,7 +35,7 @@ export default async function Story({params}) {
     headline:a.title, description:a.seo_description || a.summary,
     image:[a.image,...(a.additional_images || []).map(photo=>photo.url)].map(url=>absoluteUrl(url) || url),
     datePublished:a.published_at, inLanguage:'ar', articleSection:sections[a.category],
-    author:{'@type':'Organization',name:author},
+    author:{'@type':'Organization',name:author,url:absoluteUrl('/authors/editorial-team')},
     publisher:{'@type':'Organization',name:siteName},
     mainEntityOfPage:absoluteUrl('/news/'+a.slug)
   };
@@ -45,7 +45,7 @@ export default async function Story({params}) {
     <div className="reader-grid"><article className="reader-main">
       <header><div className="reading-meta"><Link href={'/?section='+a.category}>{sections[a.category]}</Link>
         <small>{minutes===1?'دقيقة قراءة':minutes+' د. قراءة'}</small></div><h1>{a.title}</h1></header>
-      <div className="reader-author"><span className="avatar">م</span><div><b>{author}</b>
+      <div className="reader-author"><span className="avatar">م</span><div><b><Link href="/authors/editorial-team" rel="author" className="byline-link">{author}</Link></b>
         <small>نُشر في <Published story={a}/> · {clock(a.published_at)}</small></div></div>
       <img className="reader-photo" src={a.image} alt={a.title}/>
       <ArticleActions title={a.title}/>

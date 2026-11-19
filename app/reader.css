@@ -106,3 +106,4 @@
   .related-rail > a { grid-template-columns: 96px minmax(0, 1fr); }
   .discussion a { padding: 10px 12px; }
 }
+.byline-link { color: var(--accent); text-decoration: underline; text-underline-offset: .25em; }
