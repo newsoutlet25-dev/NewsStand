@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import {useEffect, useRef} from 'react';
 import {usePathname, useSearchParams} from 'next/navigation';
-import {IconHome, IconMenu2, IconX} from '@tabler/icons-react';
+import {IconMenu2, IconSearch, IconX} from '@tabler/icons-react';
 import {sections} from '../lib/sections';
 
 export default function Navigation() {
@@ -59,10 +59,9 @@ export default function Navigation() {
       <div className="nav-fascia">
         <div className="mobile-navigation">
           <details className="section-menu" ref={menu}>
-            <summary ref={trigger}>
+            <summary ref={trigger} aria-label="قائمة الأقسام">
               <IconMenu2 className="menu-open-icon" size={23} aria-hidden="true"/>
               <IconX className="menu-close-icon" size={23} aria-hidden="true"/>
-              الأقسام
             </summary>
             <div className="section-menu-links">
               {Object.entries(sections).map(([key, label]) => (
@@ -73,8 +72,8 @@ export default function Navigation() {
               ))}
             </div>
           </details>
-          <Link href="/" className="mobile-home" aria-current={home ? 'page' : undefined}>
-            <IconHome size={16} aria-hidden="true"/>الرئيسية
+          <Link href="/?search=1" className="mobile-search" aria-label="البحث في الأخبار">
+            <IconSearch size={23} aria-hidden="true"/>
           </Link>
         </div>
         <div className="nav" ref={rail}>

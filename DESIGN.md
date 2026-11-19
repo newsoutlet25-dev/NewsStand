@@ -132,7 +132,7 @@ Article titles use `clamp(28px, 3.3vw, 40px)` with a 1.55 line height, becoming 
 
 The shared container follows the asymmetric sheet. The press gutter occupies 7.63% of the viewport on the physical left, narrows to 5% at 900px and becomes 12px at 680px. Content has additional padding on both sides. All routes use natural document scrolling. Category navigation and the department rail can scroll horizontally.
 
-The «مركاز» wordmark links to the homepage. A live Arabic date in the Riyadh time zone and a search link sit alongside it. At widths up to 680px, the date moves below the wordmark and the search link uses its icon. The roof holds a labeled «الأقسام» menu button and a home link. The menu opens a two-column paper panel with all eight sections.
+The «مركاز» wordmark links to the homepage. A live Arabic date in the Riyadh time zone and a search link sit alongside it on desktop. At widths up to 680px, the date moves below the wordmark. The roof holds two icon-only controls, a three-line section menu on the right and search on the left. Both have Arabic accessible names. The menu opens a two-column paper panel with all eight sections.
 
 The main story occupies the right side of a `1.99fr 1fr` spread. Its panoramic image has a 2.37:1 aspect ratio. The left rail carries three stories with photos on the right. The ratio becomes `1.7fr 1fr` at 1100px. At 850px the lead spans the page with three stories underneath, which stack at 600px. Latest news initially shows six horizontal cards, two per row on desktop and one per row on mobile. Each card places the image on the left. The “more news” button reveals the next six.
 

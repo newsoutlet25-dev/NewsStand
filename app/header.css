@@ -236,13 +236,6 @@
   }
 
   .edition-search {
-    margin-top: 10px;
-    min-width: 46px;
-    min-height: 44px;
-    padding-inline: 11px;
-  }
-
-  .edition-search span {
     display: none;
   }
 
@@ -260,34 +253,23 @@
     gap: 12px;
   }
 
-  .section-menu summary, .mobile-home {
-    display: inline-flex;
-    min-height: 46px;
+  .section-menu summary, .mobile-search {
+    display: flex;
+    width: 46px;
+    height: 46px;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
     color: var(--accent);
   }
 
   .section-menu summary {
     cursor: pointer;
     list-style: none;
-    padding-inline: 4px 12px;
-    font-size: 15px;
-    font-weight: 800;
   }
 
   .section-menu summary::-webkit-details-marker { display: none; }
-  .section-menu summary:focus-visible { outline: 2px solid var(--focus); outline-offset: -3px; }
+  .section-menu summary:focus-visible, .mobile-search:focus-visible { outline: 2px solid var(--focus); outline-offset: -3px; }
   .section-menu:not([open]) .menu-close-icon, .section-menu[open] .menu-open-icon { display: none; }
-
-  .mobile-home {
-    padding-inline: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--secondary);
-  }
-
-  .mobile-home[aria-current], .mobile-home:hover { color: var(--accent); }
 
   .section-menu-links {
     position: absolute;
