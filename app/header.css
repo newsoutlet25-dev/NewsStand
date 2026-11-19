@@ -1,0 +1,256 @@
+@font-face {
+  font-family: 'Markaz Wordmark';
+  src: url('/brand/markaz.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.site-header {
+  --roof-unit: clamp(.72px, .06807vw, 1.18px);
+  --roof-rise: calc(34 * var(--roof-unit));
+  position: relative;
+  isolation: isolate;
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: calc(var(--press-mast-height) + var(--roof-rise) + 13 * var(--roof-unit));
+  background: url('/brand/press-masthead.webp') left top / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+.edition-mast {
+  height: var(--press-mast-height);
+  margin-left: 4.9%;
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.1vw, 38px);
+  padding-block: 12px 0;
+}
+
+.edition-name,
+.edition-name:hover,
+.site-footer .brand {
+  color: var(--accent);
+}
+
+.edition-name,
+.site-footer .brand {
+  font-family: 'Markaz Wordmark', 'Noto Sans Arabic Variable', serif;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+.edition-name {
+  font-size: clamp(80px, 7.65vw, 135px);
+  line-height: 1;
+}
+
+.site-footer .brand {
+  font-size: 48px;
+}
+
+.edition-dateline {
+  display: grid;
+  gap: 3px;
+  margin-top: 12px;
+  padding-inline-start: clamp(12px, 1.5vw, 24px);
+  border-inline-start: 1px solid #aa898c;
+  color: var(--secondary);
+  font-size: clamp(12px, 1vw, 16px);
+}
+
+.edition-dateline span {
+  color: var(--ink);
+  font-size: 1.15em;
+  font-weight: 800;
+}
+
+.edition-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  gap: 12px;
+  min-height: 46px;
+  min-width: 104px;
+  margin-inline-start: auto;
+  margin-top: clamp(16px, 2vw, 37px);
+  padding-inline: 16px;
+  background: var(--surface) var(--paper);
+  color: var(--ink);
+  border: 1px solid #d5c4bb;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.edition-search:hover,
+.edition-search:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.site-navigation {
+  margin-left: calc(var(--press-gutter) - 6 * var(--roof-unit));
+  margin-right: calc(var(--page-end) - 9 * var(--roof-unit));
+  padding-block-start: var(--roof-rise);
+}
+
+.nav-fascia {
+  position: relative;
+  isolation: isolate;
+  padding-inline: calc(44 * var(--roof-unit)) calc(22 * var(--roof-unit));
+}
+
+.nav-fascia::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--roof-rise)) 0 calc(-20 * var(--roof-unit));
+  z-index: -1;
+  border-style: solid;
+  border-color: transparent;
+  border-width: calc(47 * var(--roof-unit)) calc(60 * var(--roof-unit)) calc(26 * var(--roof-unit)) calc(170 * var(--roof-unit));
+  border-image-source: url('/brand/press-navbar.webp');
+  border-image-slice: 47 60 26 170 fill;
+  border-image-repeat: stretch;
+  pointer-events: none;
+}
+
+.nav-rafters {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: calc(20 * var(--roof-unit));
+  margin: calc(-3 * var(--roof-unit)) 13% 0 31%;
+  pointer-events: none;
+}
+
+.nav-rafters i {
+  width: calc(38 * var(--roof-unit));
+  aspect-ratio: 162 / 80;
+  background: url('/brand/najdi-beam.webp') center top / contain no-repeat;
+}
+
+.nav {
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+  min-height: clamp(46px, 4.15vw, 72px);
+  padding: 0 clamp(9px, 1.25vw, 20px);
+  font-size: clamp(14px, 1.28vw, 21px);
+  font-weight: 800;
+}
+
+.nav a:hover,
+.nav a[aria-current=page] {
+  color: var(--accent);
+}
+
+.nav a[aria-current=page]::after {
+  content: '';
+  position: absolute;
+  width: 1.7em;
+  height: 3px;
+  bottom: max(5px, .45vw);
+  background: currentColor;
+}
+
+.nav a:focus-visible {
+  outline-offset: -5px;
+}
+
+@media (min-width: 681px) and (max-width: 1000px) {
+  .edition-mast {
+    position: relative;
+    align-items: flex-start;
+    padding-block-start: 6px;
+  }
+
+  .edition-name {
+    font-size: clamp(68px, 8.1vw, 86px);
+  }
+
+  .edition-dateline {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    position: absolute;
+    inset-inline-start: 0;
+    bottom: 3px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    --roof-unit: .62px;
+  }
+
+  .site-header::before {
+    background-image: url('/brand/press-masthead-mobile.webp');
+  }
+
+  .edition-mast {
+    position: relative;
+    align-items: flex-start;
+    padding-block-start: 8px;
+    gap: 0;
+  }
+
+  .edition-name {
+    font-size: 58px;
+  }
+
+  .edition-dateline {
+    position: absolute;
+    inset-inline-start: 0;
+    bottom: 2px;
+    display: flex;
+    gap: 7px;
+    align-items: baseline;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 10px;
+  }
+
+  .edition-search {
+    margin-top: 10px;
+    min-width: 46px;
+    min-height: 44px;
+    padding-inline: 11px;
+  }
+
+  .edition-search span {
+    display: none;
+  }
+
+  .nav-rafters {
+    margin-inline: 13% 28%;
+  }
+
+  .nav a {
+    min-height: 46px;
+    padding-inline: 11px;
+    font-size: 13px;
+  }
+}

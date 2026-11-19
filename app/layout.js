@@ -1,13 +1,14 @@
 import '@fontsource-variable/noto-sans-arabic/wght.css';
 import './style.css';
 import './shell.css';
+import './header.css';
 import {Suspense} from 'react';
 import Navigation from './navigation';
 import Footer from './footer';
 import {siteName, siteDescription, siteUrl} from '../lib/site';
 import Link from 'next/link';
-import {IconSearch,IconBookmark,IconCalendar,IconWorld} from '@tabler/icons-react';
-import {sections,isDemo} from '../lib/news';
+import {IconSearch} from '@tabler/icons-react';
+import {isDemo} from '../lib/news';
 
 export const metadata = {
   metadataBase: new URL(siteUrl || 'http://localhost:3101'),
@@ -18,10 +19,30 @@ export const metadata = {
   twitter: {card:'summary_large_image'}
 };
 export const dynamic='force-dynamic';
-export default function Layout({children}){
- const date=new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{dateStyle:'full',timeZone:'Asia/Riyadh'}).format(new Date());
- return <html lang="ar" dir="rtl"><body id="top"><a className="skip-link" href="#content">انتقل إلى المحتوى</a><div className="utility"><div className="wrap"><span><IconCalendar size={15}/>{date}</span><span><IconWorld size={15}/> الرياض، المملكة العربية السعودية</span></div></div>
- <header className="wrap mast"><Link href="/" className="brand" aria-label="المرصد، الرئيسية">المرصد<i/></Link><div className="identity">صحيفة عربية رقمية<br/><small>من قلب الحدث</small></div><div className="tools"><Link href="/?search=1" aria-label="بحث"><IconSearch/></Link><Link href="/?saved=1" aria-label="الأخبار المحفوظة"><IconBookmark/></Link></div></header>
- <Suspense><Navigation/></Suspense>
- <main id="content" className="wrap">{children}</main><Footer demo={isDemo}/></body></html>;
+export default function Layout({children}) {
+  const now = new Date();
+  const date = new Intl.DateTimeFormat('ar-SA-u-ca-gregory-nu-arab', {
+    dateStyle: 'full',
+    timeZone: 'Asia/Riyadh'
+  }).format(now);
+
+  return <html lang="ar" dir="rtl"><body id="top">
+    <a className="skip-link" href="#content">انتقل إلى المحتوى</a>
+    <header className="site-header">
+      <div className="wrap edition-mast">
+        <Link href="/" className="edition-name" aria-label={siteName + '، الرئيسية'}>{siteName}</Link>
+        <div className="edition-dateline">
+          <span>الرياض</span>
+          <time dateTime={now.toISOString()}>{date}</time>
+        </div>
+        <Link href="/?search=1" className="edition-search" aria-label="البحث في الأخبار">
+          <IconSearch size={19} stroke={1.7} aria-hidden="true"/>
+          <span>بحث</span>
+        </Link>
+      </div>
+      <Suspense><Navigation/></Suspense>
+    </header>
+    <main id="content" className="wrap site-content">{children}</main>
+    <Footer demo={isDemo}/>
+  </body></html>;
 }

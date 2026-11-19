@@ -1,5 +1,5 @@
 {
-  "name": "almarsad-news",
+  "name": "markaz-news",
   "private": true,
   "scripts": {
     "dev": "next dev",

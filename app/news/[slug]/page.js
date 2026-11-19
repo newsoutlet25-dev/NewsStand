@@ -17,7 +17,7 @@ export async function generateMetadata({params}) {
   return {
     title, description,
     alternates:{canonical},
-    openGraph:{type:'article',title,description,url:canonical,
+    openGraph:{type:'article',siteName,title,description,url:canonical,
       publishedTime:a.published_at,section:sections[a.category],images:[{url:a.image,alt:a.title}]},
     twitter:{card:'summary_large_image',title,description,images:[a.image]}
   };
@@ -55,7 +55,7 @@ export default async function Story({params}) {
           <img src={photo.url} alt={photo.caption || a.title} loading="lazy"/>
         </figure>)}
       </section>}
-      <Discussion title={a.title} slug={a.slug} excerpt={a.body.slice(0,600)}/>
+      <Discussion title={a.title} slug={a.slug} excerpt={a.body.slice(0,600)} publication={siteName}/>
     </article>
     {!!related.length && <div className="related-rail"><h2>أخبار ذات علاقة</h2>
       {related.map(b=><Link key={b.slug} href={'/news/'+b.slug}><img src={b.image} alt=""/><div><h3>{b.title}</h3><Published story={b}/></div></Link>)}</div>}</div>

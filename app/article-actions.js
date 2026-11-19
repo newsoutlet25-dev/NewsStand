@@ -11,18 +11,34 @@ export default function ArticleActions({title}) {
   useEffect(() => {
     setUrl(window.location.href.split('#')[0]);
     const body = document.querySelector('.reader-body');
+    const main = document.querySelector('main#content');
+    let scrollTarget;
     const update = () => {
       if (!body || !progress.current) return;
       const rect = body.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (rect.height + window.innerHeight)));
+      const viewportHeight = scrollTarget === main ? main.clientHeight : window.innerHeight;
+      const viewportTop = scrollTarget === main ? main.getBoundingClientRect().top + main.clientTop : 0;
+      const ratio = Math.min(1, Math.max(0, (viewportTop + viewportHeight - rect.top) / (rect.height + viewportHeight)));
       progress.current.style.transform = `scaleX(${ratio})`;
     };
-    window.addEventListener('scroll', update, {passive: true});
-    window.addEventListener('resize', update);
-    update();
+    const refresh = () => {
+      const nextTarget = main && window.getComputedStyle(main).overflowY === 'auto' && main.scrollHeight > main.clientHeight ? main : window;
+      if (nextTarget !== scrollTarget) {
+        scrollTarget?.removeEventListener('scroll', update);
+        scrollTarget = nextTarget;
+        scrollTarget.addEventListener('scroll', update, {passive: true});
+      }
+      update();
+    };
+    window.addEventListener('resize', refresh);
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(refresh) : null;
+    if (body) observer?.observe(body);
+    if (main) observer?.observe(main);
+    refresh();
     return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      scrollTarget?.removeEventListener('scroll', update);
+      window.removeEventListener('resize', refresh);
+      observer?.disconnect();
       body?.style.removeProperty('font-size');
     };
   }, []);

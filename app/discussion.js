@@ -8,11 +8,11 @@ const providers=[
   ['Claude','https://claude.ai/new',IconAsterisk],
   ['Grok','https://grok.com/',IconBrandX]
 ];
-export default function Discussion({title,excerpt,slug}) {
+export default function Discussion({title,excerpt,slug,publication}) {
   const [origin,setOrigin]=useState('');
   useEffect(()=>{setOrigin(window.location.origin);},[]);
   const articleUrl=origin+'/news/'+encodeURIComponent(slug);
-  const prompt=['ناقش معي هذا الخبر من صحيفة المرصد.',title,articleUrl,'مقتطف من الخبر: '+excerpt,
+  const prompt=[`ناقش معي هذا الخبر من صحيفة ${publication}.`,title,articleUrl,'مقتطف من الخبر: '+excerpt,
     'لخّص أهم ما ورد فيه، واشرح أثره المحتمل على القارئ. ميّز بين ما يقوله النص والاستنتاجات، واذكر المصدر.'].join('\n');
   return <section id="discuss" className="discussion" aria-label="ناقش الخبر مع الذكاء الاصطناعي">
     <h2>ناقش الخبر مع الذكاء الاصطناعي</h2>
