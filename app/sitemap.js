@@ -13,7 +13,7 @@ export default async function sitemap() {
     {url:absoluteUrl('/authors/editorial-team')},
     {url:absoluteUrl('/about')},
     {url:absoluteUrl('/privacy')},
-    ...Object.keys(sections).map(section => ({url:absoluteUrl('/?section='+section)})),
+    ...Object.keys(sections).map(section => ({url:absoluteUrl('/'+section)})),
     ...articles.map(article => ({url:absoluteUrl('/news/'+article.slug),lastModified:article.published_at}))
   ];
 }

@@ -9,7 +9,7 @@ function DateLine({story}) {
 }
 function Heading({category, title, action}) {
   return <header className="edition-heading"><h2>{title || sections[category]}</h2>
-    {category && <Link href={'/?section='+category}>{action || 'كل الأخبار'} ←</Link>}
+    {category && <Link href={'/'+category}>{action || 'كل الأخبار'} ←</Link>}
   </header>;
 }
 function Photo({story}) {
@@ -18,7 +18,7 @@ function Photo({story}) {
 function Department({stories,category}) {
   const [lead,...rest]=stories;
   return <section className="department" aria-labelledby={'department-'+category}>
-    <header className="department-heading"><h2 id={'department-'+category}><Link href={'/?section='+category}>{sections[category]}</Link></h2><Link href={'/?section='+category} aria-label={'كل أخبار '+sections[category]}>المزيد ←</Link></header>
+    <header className="department-heading"><h2 id={'department-'+category}><Link href={'/'+category}>{sections[category]}</Link></h2><Link href={'/'+category} aria-label={'كل أخبار '+sections[category]}>المزيد ←</Link></header>
     <div className="department-sheet"><Link className="department-lead" href={url(lead)}><Photo story={lead}/><div><h3>{lead.title}</h3><DateLine story={lead}/><p>{lead.summary}</p></div></Link>
     <ol className="department-list">{rest.slice(0,2).map(story=><li key={story.slug}><Link href={url(story)}><h3>{story.title}</h3><DateLine story={story}/></Link></li>)}</ol></div>
   </section>;

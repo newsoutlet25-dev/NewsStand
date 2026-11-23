@@ -14,7 +14,7 @@ export default async function CategoryPage({category, page='1'}) {
   const lead=number===1 && stories[0];
   const supporting=lead ? stories.slice(1,5) : [];
   const archive=lead ? stories.slice(5) : stories;
-  const pageLink=n=>'/?section='+category+'&page='+n;
+  const pageLink=n=>'/'+category+(n>1?'?page='+n:'');
   return <div className="category-reader">
     <header className="category-banner"><div className="reader-crumb"><Link href="/">الرئيسية</Link> ‹ {name}</div>
       <small>قسم</small><h1>{name}</h1><p>آخر الأخبار والتقارير في قسم {name}.</p></header>

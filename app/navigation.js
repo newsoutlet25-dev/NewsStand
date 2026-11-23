@@ -8,7 +8,7 @@ import {sections} from '../lib/sections';
 export default function Navigation() {
   const pathname = usePathname();
   const params = useSearchParams();
-  const selected = pathname === '/' ? params.get('section') : null;
+  const selected = pathname.slice(1);
   const home = pathname === '/' && !params.toString();
   const rail = useRef(null);
   const menu = useRef(null);
@@ -65,7 +65,7 @@ export default function Navigation() {
             </summary>
             <div className="section-menu-links">
               {Object.entries(sections).map(([key, label]) => (
-                <Link key={key} href={'/?section=' + key} aria-current={selected === key ? 'page' : undefined}
+                <Link key={key} href={'/' + key} aria-current={selected === key ? 'page' : undefined}
                   onClick={() => { menu.current.open = false; }}>
                   {label}
                 </Link>
@@ -79,7 +79,7 @@ export default function Navigation() {
         <div className="nav" ref={rail}>
           <Link href="/" aria-current={home ? 'page' : undefined}>الرئيسية</Link>
           {Object.entries(sections).map(([key, label]) => (
-            <Link key={key} href={'/?section=' + key} aria-current={selected === key ? 'page' : undefined}>
+            <Link key={key} href={'/' + key} aria-current={selected === key ? 'page' : undefined}>
               {label}
             </Link>
           ))}

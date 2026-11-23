@@ -41,9 +41,9 @@ export default async function Story({params}) {
   };
   return <div className="article-reader">
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:jsonLd(structured)}}/>
-    <div className="reader-crumb"><Link href="/">الرئيسية</Link> ‹ <Link href={'/?section='+a.category}>{sections[a.category]}</Link> ‹ الخبر</div>
+    <div className="reader-crumb"><Link href="/">الرئيسية</Link> ‹ <Link href={'/'+a.category}>{sections[a.category]}</Link> ‹ الخبر</div>
     <div className="reader-grid"><article className="reader-main">
-      <header><div className="reading-meta"><Link href={'/?section='+a.category}>{sections[a.category]}</Link>
+      <header><div className="reading-meta"><Link href={'/'+a.category}>{sections[a.category]}</Link>
         <small>{minutes===1?'دقيقة قراءة':minutes+' د. قراءة'}</small></div><h1>{a.title}</h1></header>
       <div className="reader-author"><span className="avatar">م</span><div><b><Link href="/authors/editorial-team" rel="author" className="byline-link">{author}</Link></b>
         <small>نُشر في <Published story={a}/> · {clock(a.published_at)}</small></div></div>
