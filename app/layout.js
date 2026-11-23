@@ -27,6 +27,12 @@ export default function Layout({children}) {
   }).format(now);
 
   return <html lang="ar" dir="rtl"><body id="top">
+    <svg width="0" height="0" style={{position:'absolute'}} aria-hidden="true" focusable="false">
+      <defs><filter id="navy-print" colorInterpolationFilters="sRGB">
+        {/* Remap the press ink while anchoring the ivory paper color. */}
+        <feColorMatrix type="matrix" values="-.16 1.16 0 0 .0364  .317 .683 0 0 -.00995  .286 -.286 1 0 -.00897  0 0 0 1 0"/>
+      </filter></defs>
+    </svg>
     <a className="skip-link" href="#content">انتقل إلى المحتوى</a>
     <header className="site-header">
       <div className="wrap edition-mast">

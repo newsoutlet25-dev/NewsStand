@@ -7,10 +7,10 @@
   --line: #cfc3b8;
   --control-edge: #948588;
   --soft: #f7f5f4;
-  --accent: #692238;
-  --accent-soft: #f6edf0;
-  --focus: #8b3651;
-  --selection: #ead3dc;
+  --accent: #20364a;
+  --accent-soft: #eaf0f3;
+  --focus: #355e7b;
+  --selection: #d3e1ea;
   --press-gutter: 7.63%;
   --page-pad: clamp(16px, 1.5vw, 30px);
   --page-end: clamp(16px, 2.1vw, 44px);
@@ -26,6 +26,7 @@ body::before{
   z-index:-1;
   width:var(--press-gutter);
   background:#621429 url('/brand/press-margin.webp') left top / 100% auto repeat-y;
+  filter:url(#navy-print);
   pointer-events:none;
 }
 ::selection{background:var(--selection);color:var(--ink)}
