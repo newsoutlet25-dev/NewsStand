@@ -48,14 +48,14 @@ export default async function Story({params}) {
       <div className="reader-author"><span className="avatar">م</span><div><b><Link href="/authors/editorial-team" rel="author" className="byline-link">{author}</Link></b>
         <small>نُشر في <Published story={a}/> · {clock(a.published_at)}</small></div></div>
       <img className="reader-photo" src={a.image} alt={a.title}/>
-      <ArticleActions title={a.title}/>
+      <ArticleActions title={a.title} url={structured.mainEntityOfPage}/>
       <div className="reader-body">{a.body.split(/\n+/).filter(Boolean).map((p,i)=><p key={i}>{p}</p>)}</div>
       {!!a.additional_images?.length && <section className="article-gallery" aria-label="صور الخبر">
         {a.additional_images.map(photo=><figure key={photo.url}>
           <img src={photo.url} alt={photo.caption || a.title} loading="lazy"/>
         </figure>)}
       </section>}
-      <Discussion title={a.title} slug={a.slug} excerpt={a.body.slice(0,600)} publication={siteName}/>
+      <Discussion title={a.title} articleUrl={structured.mainEntityOfPage} excerpt={a.body.slice(0,600)} publication={siteName}/>
     </article>
     {!!related.length && <div className="related-rail"><h2>أخبار ذات علاقة</h2>
       {related.map(b=><Link key={b.slug} href={'/news/'+b.slug}><img src={b.image} alt=""/><div><h3>{b.title}</h3><Published story={b}/></div></Link>)}</div>}</div>

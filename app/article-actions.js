@@ -3,13 +3,11 @@
 import {useEffect, useRef, useState} from 'react';
 import {IconBrandWhatsapp, IconBrandX, IconLink, IconMinus, IconPlus} from '@tabler/icons-react';
 
-export default function ArticleActions({title}) {
-  const [url, setUrl] = useState('');
+export default function ArticleActions({title, url}) {
   const [message, setMessage] = useState('');
   const [size, setSize] = useState(100);
   const progress = useRef(null);
   useEffect(() => {
-    setUrl(window.location.href.split('#')[0]);
     const body = document.querySelector('.reader-body');
     const main = document.querySelector('main#content');
     let scrollTarget;

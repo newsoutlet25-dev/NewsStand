@@ -9,13 +9,14 @@ import {absoluteUrl, siteName} from '../lib/site';
 
 export async function generateMetadata({searchParams}) {
   const query = await searchParams;
-  const category = typeof query.section === 'string' ? sections[query.section] : null;
+  const category = !query.search && Object.hasOwn(sections, query.section) ? sections[query.section] : null;
   const title = category ? 'أخبار ' + category : query.search ? 'البحث في الأخبار' : query.latest ? 'آخر الأخبار' : siteName;
   const description = category ? 'آخر أخبار ' + category + ' وتقاريرها في ' + siteName + '.' : 'أخبار السعودية والعالم وتغطيات السياسة والاقتصاد والرياضة والثقافة.';
   const canonical = new URLSearchParams();
   if (category) canonical.set('section', query.section);
-  if (query.latest) canonical.set('latest','1');
-  if (query.page && /^[1-9]\d*$/.test(query.page) && Number(query.page)>1) canonical.set('page',query.page);
+  if (query.search) canonical.set('search','1');
+  else if (!category && query.latest) canonical.set('latest','1');
+  if (category && /^[1-9]\d*$/.test(query.page) && Number(query.page)>1) canonical.set('page',query.page);
   const path = canonical.size ? '/?' + canonical.toString() : '/';
   return {
     title:title === siteName ? {absolute:siteName} : title, description,

@@ -1,4 +1,4 @@
-import {isDemo, listNews} from '../lib/news';
+import {isDemo, sitemapNews} from '../lib/news';
 import {sections} from '../lib/sections';
 import {absoluteUrl, siteUrl} from '../lib/site';
 
@@ -6,9 +6,11 @@ export const dynamic = 'force-dynamic';
 
 export default async function sitemap() {
   if (!siteUrl || isDemo) return [];
-  const articles = await listNews();
+  const articles = await sitemapNews();
   return [
-    {url:siteUrl},
+    {url:absoluteUrl('/')},
+    {url:absoluteUrl('/?latest=1')},
+    {url:absoluteUrl('/authors/editorial-team')},
     {url:absoluteUrl('/about')},
     {url:absoluteUrl('/privacy')},
     ...Object.keys(sections).map(section => ({url:absoluteUrl('/?section='+section)})),

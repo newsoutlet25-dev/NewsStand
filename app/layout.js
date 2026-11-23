@@ -11,7 +11,7 @@ import {IconSearch} from '@tabler/icons-react';
 import {isDemo} from '../lib/news';
 
 export const metadata = {
-  metadataBase: new URL(siteUrl || 'http://localhost:3101'),
+  metadataBase: new URL(siteUrl),
   title: {default: siteName + ' | الصحيفة الرقمية', template: '%s | ' + siteName},
   description: siteDescription,
   robots: {index: Boolean(siteUrl) && !isDemo, follow: Boolean(siteUrl) && !isDemo},

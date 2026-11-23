@@ -6,7 +6,8 @@ import '../../reader.css';
 export const metadata = {
   title: 'فريق التحرير',
   description: 'أحدث الأخبار والتقارير المنشورة بتوقيع فريق تحرير مشراق.',
-  alternates: {canonical: '/authors/editorial-team'}
+  alternates: {canonical: '/authors/editorial-team'},
+  openGraph: {type:'website',siteName:'مشراق',title:'فريق التحرير | مشراق',description:'أحدث أخبار فريق تحرير مشراق.',url:'/authors/editorial-team'}
 };
 
 export default async function EditorialTeamPage() {

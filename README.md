@@ -23,7 +23,7 @@
 - Build Command: `npm ci && npm run build`
 - Start Command: `npm run start -- -H 0.0.0.0`
 - أضف `SUPABASE_URL` و`SUPABASE_PUBLISHABLE_KEY` في Environment.
-- يستخدم الموقع `RENDER_EXTERNAL_URL` تلقائيًا لروابط SEO. عند ربط نطاق خاص، اضبط `SITE_URL` على أصله الكامل، مثل `https://example.com`.
+- يستخدم الموقع `https://mshraq.com` للروابط الأساسية وخريطة الموقع والمشاركة.
 - فعّل Auto-Deploy ليتبع النشر تحديثات الفرع.
 
 ملفات `.env.local` و`node_modules` و`.next` مستبعدة من Git. لا تحتاج الواجهة إلى مفتاح service_role.
