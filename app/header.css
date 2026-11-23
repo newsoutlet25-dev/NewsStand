@@ -14,7 +14,7 @@
 }
 
 .site-header::before {
-  filter: url(#navy-print);
+  filter: url(#navy-print) url(#press-paper-tone);
   content: '';
   position: absolute;
   inset: 0 0 auto;
@@ -82,7 +82,7 @@
   margin-inline-start: auto;
   margin-top: clamp(16px, 2vw, 37px);
   padding-inline: 16px;
-  background: var(--surface) var(--paper);
+  background: linear-gradient(#faf8f5f2, #faf8f5f2), var(--paper) var(--surface);
   color: var(--ink);
   border: 1px solid #d5c4bb;
   border-radius: 3px;
@@ -109,7 +109,7 @@
 }
 
 .nav-fascia::before {
-  filter: url(#navy-print);
+  filter: url(#navy-print) url(#press-paper-tone);
   content: '';
   position: absolute;
   inset: calc(-1 * var(--roof-rise)) 0 calc(-20 * var(--roof-unit));
@@ -134,7 +134,7 @@
 }
 
 .nav-rafters i {
-  filter: url(#navy-print);
+  filter: url(#navy-print) url(#press-paper-tone);
   width: calc(38 * var(--roof-unit));
   aspect-ratio: 162 / 80;
   background: url('/brand/najdi-beam.webp') center top / contain no-repeat;
@@ -285,7 +285,7 @@
     border: 1px solid var(--line);
     border-block-start: 3px solid var(--accent);
     box-shadow: 0 8px 16px #20364a20;
-    background: var(--surface) var(--paper);
+    background: linear-gradient(#faf8f5f2, #faf8f5f2), var(--paper) var(--surface);
   }
 
   .section-menu-links a {
