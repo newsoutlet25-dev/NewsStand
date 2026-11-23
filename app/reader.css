@@ -58,6 +58,9 @@
 .reader-author { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
 .reader-author b { color: var(--ink); font-size: 13px; font-weight: 700; }
 .reader-author small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.reader-author .story-details { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+.story-details > span { white-space: nowrap; }
+.story-views { display: inline-flex; align-items: center; gap: 4px; }
 .avatar { display: none; }
 .reader-photo { display: block; width: 100%; height: auto; max-height: 560px; object-fit: contain; }
 .reader-body { max-width: 72ch; margin-top: 24px; color: var(--ink); font-size: 19px; line-height: 2.05; overflow-wrap: anywhere; }

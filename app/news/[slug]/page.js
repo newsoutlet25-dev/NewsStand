@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {notFound} from 'next/navigation';
-import {findNews,listNews,sections,clock,sectionNews} from '../../../lib/news';
+import {articleViewCount,findNews,listNews,sections,clock,sectionNews} from '../../../lib/news';
+import ViewCount from '../view-count';
 
 import Discussion from '../../discussion';
 import Published from '../../published';
@@ -25,7 +26,7 @@ export async function generateMetadata({params}) {
 export default async function Story({params}) {
   const a=await findNews((await params).slug);
   if (!a) notFound();
-  const [section,latest]=await Promise.all([sectionNews(a.category,7),listNews()]);
+  const [section,latest,views]=await Promise.all([sectionNews(a.category,7),listNews(),articleViewCount(a.slug)]);
   const related=section.filter(b=>b.slug!==a.slug).slice(0,4);
   const following=latest.filter(b=>b.slug!==a.slug && !related.some(r=>r.slug===b.slug)).slice(0,6);
   const minutes=Math.max(1,Math.ceil(a.body.trim().split(/\s+/).length/200));
@@ -41,12 +42,15 @@ export default async function Story({params}) {
   };
   return <div className="article-reader">
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:jsonLd(structured)}}/>
-    <div className="reader-crumb"><Link href="/">الرئيسية</Link> ‹ <Link href={'/'+a.category}>{sections[a.category]}</Link> ‹ الخبر</div>
+    <nav className="reader-crumb" aria-label="مسار التنقل"><Link href="/">الرئيسية</Link> ‹ <Link href={'/'+a.category}>{sections[a.category]}</Link> ‹ <span aria-current="page">{a.title}</span></nav>
     <div className="reader-grid"><article className="reader-main">
       <header><div className="reading-meta"><Link href={'/'+a.category}>{sections[a.category]}</Link>
-        <small>{minutes===1?'دقيقة قراءة':minutes+' د. قراءة'}</small></div><h1>{a.title}</h1></header>
+        </div><h1>{a.title}</h1></header>
       <div className="reader-author"><span className="avatar">م</span><div><b><Link href="/authors/editorial-team" rel="author" className="byline-link">{author}</Link></b>
-        <small>نُشر في <Published story={a}/> · {clock(a.published_at)}</small></div></div>
+        <small className="story-details"><span>نُشر في <Published story={a}/> · {clock(a.published_at)}</span>
+          <ViewCount key={a.slug} slug={a.slug} initialCount={views}/>
+          <span>{minutes===1?'دقيقة قراءة':minutes===2?'دقيقتا قراءة':minutes.toLocaleString('ar-SA')+(minutes%100>=3 && minutes%100<=10?' دقائق قراءة':' دقيقة قراءة')}</span>
+        </small></div></div>
       <img className="reader-photo" src={a.image} alt={a.title}/>
       <ArticleActions title={a.title} url={structured.mainEntityOfPage}/>
       <div className="reader-body">{a.body.split(/\n+/).filter(Boolean).map((p,i)=><p key={i}>{p}</p>)}</div>
