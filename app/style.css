@@ -1,6 +1,6 @@
 *{box-sizing:border-box}
 :root {
-  --surface: #f7efe6;
+  --surface: #faf8f5;
   --ink: #1f1918;
   --secondary: #554f50;
   --muted: #6c6265;
@@ -18,7 +18,7 @@
   --paper: url('/brand/press-paper.webp');
 }
 html{scroll-behavior:smooth;scroll-padding-top:20px}
-body{position:relative;isolation:isolate;margin:0;font-family:'Noto Sans Arabic Variable',Tahoma,sans-serif;background:var(--surface) var(--paper) repeat;color:var(--ink);line-height:1.7}
+body{position:relative;isolation:isolate;margin:0;font-family:'Noto Sans Arabic Variable',Tahoma,sans-serif;background:var(--surface);color:var(--ink);line-height:1.7}
 body::before{
   content:'';
   position:absolute;

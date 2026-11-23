@@ -1,5 +1,5 @@
 .skip-link{position:fixed;top:-80px;right:16px;z-index:100;background:var(--surface);color:var(--accent);padding:12px 20px;border:2px solid var(--accent)}.skip-link:focus{top:10px}
-.site-footer{margin:50px 0 0 var(--press-gutter);background:var(--surface) var(--paper);border-top:1px solid var(--accent);padding:32px 0 0}
+.site-footer{margin:50px 0 0 var(--press-gutter);background:var(--surface);border-top:1px solid var(--accent);padding:32px 0 0}
 .site-footer .wrap{margin-left:var(--page-pad)}
 .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:50px}.site-footer .brand{font-size:35px}
 .site-footer h2{font-size:15px;margin:0 0 12px}.site-footer ul{list-style:none;padding:0;margin:0;font-size:13px;line-height:2.4}
