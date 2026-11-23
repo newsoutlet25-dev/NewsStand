@@ -5,7 +5,7 @@ import '../../reader.css';
 
 export const metadata = {
   title: 'فريق التحرير',
-  description: 'أحدث الأخبار والتقارير المنشورة بتوقيع فريق تحرير مركاز.',
+  description: 'أحدث الأخبار والتقارير المنشورة بتوقيع فريق تحرير مشراق.',
   alternates: {canonical: '/authors/editorial-team'}
 };
 
@@ -15,7 +15,7 @@ export default async function EditorialTeamPage() {
     <header className="category-banner">
       <div className="reader-crumb"><Link href="/">الرئيسية</Link> ‹ فريق التحرير</div>
       <h1>فريق التحرير</h1>
-      <p>فريق تحرير مركاز.</p>
+      <p>فريق تحرير مشراق.</p>
     </header>
     <section aria-labelledby="team-news">
       <h2 id="team-news" className="reader-heading">أحدث أخبار الفريق</h2>
