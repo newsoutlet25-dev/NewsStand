@@ -49,7 +49,7 @@ export default async function Story({params}) {
       <div className="reader-author"><span className="avatar">م</span><div><b><Link href="/authors/editorial-team" rel="author" className="byline-link">{author}</Link></b>
         <small className="story-details"><span>نُشر في <Published story={a}/> · {clock(a.published_at)}</span>
           <ViewCount key={a.slug} slug={a.slug} initialCount={views}/>
-          <span>{minutes===1?'دقيقة قراءة':minutes===2?'دقيقتا قراءة':minutes.toLocaleString('ar-SA')+(minutes%100>=3 && minutes%100<=10?' دقائق قراءة':' دقيقة قراءة')}</span>
+          <span>مدة القراءة: {minutes===1?'دقيقة واحدة':minutes===2?'دقيقتان':minutes.toLocaleString('ar-SA')+(minutes%100>=3 && minutes%100<=10?' دقائق':' دقيقة')}</span>
         </small></div></div>
       <img className="reader-photo" src={a.image} alt={a.title}/>
       <ArticleActions title={a.title} url={structured.mainEntityOfPage}/>
