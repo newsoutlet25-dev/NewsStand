@@ -4,6 +4,7 @@ import './shell.css';
 import './header.css';
 import {Suspense} from 'react';
 import Navigation from './navigation';
+import {SiteSchema} from './page-schema';
 import Footer from './footer';
 import {siteName, siteDescription, siteUrl} from '../lib/site';
 import Link from 'next/link';
@@ -27,7 +28,7 @@ export default function Layout({children}) {
     timeZone: 'Asia/Riyadh'
   }).format(now);
 
-  return <html lang="ar" dir="rtl"><body id="top">
+  return <html lang="ar" dir="rtl"><body id="top"><SiteSchema/>
     <svg width="0" height="0" style={{position:'absolute'}} aria-hidden="true" focusable="false">
       <defs><filter id="navy-print" colorInterpolationFilters="sRGB">
         {/* Remap the press ink while anchoring the ivory paper color. */}

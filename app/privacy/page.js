@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default function PrivacyPage() {
-  return <InformationPage title="سياسة الخصوصية" updated introduction={'توضح هذه الصفحة طريقة التعامل مع المعلومات عند استخدام موقع '+siteName+'، بحسب الخدمات المتاحة حاليًا.'}>
+  return <InformationPage path="/privacy" title="سياسة الخصوصية" updated introduction={'توضح هذه الصفحة طريقة التعامل مع المعلومات عند استخدام موقع '+siteName+'، بحسب الخدمات المتاحة حاليًا.'}>
     <section><h2>نطاق هذه السياسة</h2>
       <p>تتعلق هذه السياسة بتصفح الموقع وقراءة الأخبار والبحث فيها. لا تتطلب هذه الخدمات إنشاء حساب أو تقديم اسمك أو بريدك الإلكتروني، ولا تتضمن النسخة الحالية نماذج تسجيل أو اشتراكات بريدية.</p>
     </section>

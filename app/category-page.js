@@ -3,6 +3,7 @@ import {notFound} from 'next/navigation';
 import {sectionNews, sections} from '../lib/news';
 import './reader.css';
 
+import {PageSchema} from './page-schema';
 import Published from './published';
 const path = story => '/news/' + story.slug;
 export default async function CategoryPage({category, page='1'}) {
@@ -16,6 +17,7 @@ export default async function CategoryPage({category, page='1'}) {
   const archive=lead ? stories.slice(5) : stories;
   const pageLink=n=>'/'+category+(n>1?'?page='+n:'');
   return <div className="category-reader">
+    <PageSchema type="CollectionPage" path={pageLink(number)} name={name}/>
     <header className="category-banner"><div className="reader-crumb"><Link href="/">الرئيسية</Link> ‹ {name}</div>
       <small>قسم</small><h1>{name}</h1><p>آخر الأخبار والتقارير في قسم {name}.</p></header>
     {lead && <section aria-label={'أبرز أخبار '+name}>

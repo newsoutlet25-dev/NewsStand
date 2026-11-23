@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {listNews, sections} from '../../../lib/news';
+import {PageSchema, team} from '../../page-schema';
 import Published from '../../published';
 import '../../reader.css';
 
@@ -13,6 +14,7 @@ export const metadata = {
 export default async function EditorialTeamPage() {
   const stories = await listNews();
   return <div className="category-reader">
+    <PageSchema type="ProfilePage" path="/authors/editorial-team" name={team.name} entity={team}/>
     <header className="category-banner">
       <div className="reader-crumb"><Link href="/">الرئيسية</Link> ‹ فريق التحرير</div>
       <h1>فريق التحرير</h1>

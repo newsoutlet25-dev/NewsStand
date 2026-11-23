@@ -7,7 +7,8 @@ import Discussion from '../../discussion';
 import Published from '../../published';
 import '../../reader.css';
 import ArticleActions from '../../article-actions';
-import {absoluteUrl, jsonLd, siteName} from '../../../lib/site';
+import {PageSchema, publisherId, team} from '../../page-schema';
+import {absoluteUrl, siteName} from '../../../lib/site';
 
 export async function generateMetadata({params}) {
   const a=await findNews((await params).slug);
@@ -19,7 +20,7 @@ export async function generateMetadata({params}) {
     title, description,
     alternates:{canonical},
     openGraph:{type:'article',siteName,title,description,url:canonical,
-      publishedTime:a.published_at,section:sections[a.category],images:[{url:a.image,alt:a.title}]},
+      locale:'ar_SA',authors:[absoluteUrl('/authors/editorial-team')],publishedTime:a.published_at,section:sections[a.category],images:[{url:a.image,alt:a.title}]},
     twitter:{card:'summary_large_image',title,description,images:[a.image]}
   };
 }
@@ -32,16 +33,16 @@ export default async function Story({params}) {
   const minutes=Math.max(1,Math.ceil(a.body.trim().split(/\s+/).length/200));
   const author = 'فريق التحرير';
   const structured = {
-    '@context':'https://schema.org', '@type':'NewsArticle',
+    '@id':absoluteUrl('/news/'+a.slug+'#article'), '@type':'NewsArticle',
     headline:a.title, description:a.seo_description || a.summary,
     image:[a.image,...(a.additional_images || []).map(photo=>photo.url)].map(url=>absoluteUrl(url) || url),
     datePublished:a.published_at, inLanguage:'ar', articleSection:sections[a.category],
-    author:{'@type':'Organization',name:author,url:absoluteUrl('/authors/editorial-team')},
-    publisher:{'@type':'Organization',name:siteName},
+    author:team,
+    publisher:{'@id':publisherId},
     mainEntityOfPage:absoluteUrl('/news/'+a.slug)
   };
   return <div className="article-reader">
-    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:jsonLd(structured)}}/>
+    <PageSchema path={structured.mainEntityOfPage} name={a.title} parents={[[sections[a.category],'/'+a.category]]} entity={structured}/>
     <nav className="reader-crumb" aria-label="مسار التنقل"><Link href="/">الرئيسية</Link> ‹ <Link href={'/'+a.category}>{sections[a.category]}</Link> ‹ <span aria-current="page">{a.title}</span></nav>
     <div className="reader-grid"><article className="reader-main">
       <header><div className="reading-meta"><Link href={'/'+a.category}>{sections[a.category]}</Link>
