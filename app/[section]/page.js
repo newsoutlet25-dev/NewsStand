@@ -1,16 +1,14 @@
 import {notFound} from 'next/navigation';
 import CategoryPage from '../category-page';
 import {sections} from '../../lib/sections';
-import {absoluteUrl, siteName} from '../../lib/site';
+import {pageMetadata} from '../../lib/page-metadata';
 
 export async function generateMetadata({params, searchParams}) {
   const {section} = await params;
   if (!Object.hasOwn(sections, section)) notFound();
   const {page} = await searchParams;
-  const url = absoluteUrl('/' + section + (Number(page)>1 ? '?page='+page : ''));
-  const title = 'أخبار ' + sections[section];
-  const description = 'آخر أخبار ' + sections[section] + ' وتقاريرها في ' + siteName + '.';
-  return {title, description, alternates:{canonical:url}, openGraph:{siteName,title,description,url}};
+  const number = Number(page) || 1;
+  return pageMetadata(section, '/' + section + (number > 1 ? '?page=' + number : ''), number);
 }
 
 export default async function Section({params, searchParams}) {

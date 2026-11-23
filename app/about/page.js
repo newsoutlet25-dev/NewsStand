@@ -1,13 +1,10 @@
 import Link from 'next/link';
 import InformationPage from '../information-page';
-import {absoluteUrl, siteName} from '../../lib/site';
+import {siteName} from '../../lib/site';
 
-export const metadata = {
-  title:'من نحن',
-  description:'تعرّف على '+siteName+'، ومحتواها الإخباري والخدمات المتاحة للقراء.',
-  alternates:{canonical:absoluteUrl('/about')},
-  openGraph:{siteName,title:'من نحن | '+siteName,description:'صحيفة رقمية عربية تتابع أخبار السعودية والعالم.',url:absoluteUrl('/about'),type:'website'}
-};
+import {pageMetadata} from '../../lib/page-metadata';
+
+export const metadata = pageMetadata('about', '/about');
 
 export default function AboutPage() {
   return <InformationPage path="/about" type="AboutPage" title="من نحن" introduction={siteName+' صحيفة رقمية عربية تتابع أخبار السعودية والعالم، وتجمع موضوعات الشأن العام والحياة اليومية في تجربة قراءة واحدة.'}>

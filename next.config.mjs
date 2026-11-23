@@ -1,4 +1,6 @@
 export default {
+  // Keep metadata in the document head for browser SEO inspectors as well as crawlers.
+  htmlLimitedBots: /.*/,
   async redirects() {
     const domains = ['newsstand-15r1.onrender.com', 'www.mshraq.com'].map(host => ({
       source: '/:path*',

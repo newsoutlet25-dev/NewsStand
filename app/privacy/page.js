@@ -1,12 +1,9 @@
 import InformationPage from '../information-page';
-import {absoluteUrl, siteName} from '../../lib/site';
+import {siteName} from '../../lib/site';
 
-export const metadata = {
-  title:'سياسة الخصوصية',
-  description:'كيفية التعامل مع بيانات التصفح والخدمات الخارجية في '+siteName+'.',
-  alternates:{canonical:absoluteUrl('/privacy')},
-  openGraph:{siteName,title:'سياسة الخصوصية | '+siteName,description:'معلومات عن بيانات التصفح والروابط الخارجية.',url:absoluteUrl('/privacy'),type:'website'}
-};
+import {pageMetadata} from '../../lib/page-metadata';
+
+export const metadata = pageMetadata('privacy', '/privacy');
 
 export default function PrivacyPage() {
   return <InformationPage path="/privacy" title="سياسة الخصوصية" updated introduction={'توضح هذه الصفحة طريقة التعامل مع المعلومات عند استخدام موقع '+siteName+'، بحسب الخدمات المتاحة حاليًا.'}>
