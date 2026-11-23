@@ -12,6 +12,7 @@ import {isDemo} from '../lib/news';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
+  verification: {google: 'WO5j4zbW7c84zY_QC7j3AlpF6m9ZsVNcRO3aY_XcJeQ'},
   title: {default: siteName + ' | الصحيفة الرقمية', template: '%s | ' + siteName},
   description: siteDescription,
   robots: {index: Boolean(siteUrl) && !isDemo, follow: Boolean(siteUrl) && !isDemo},
