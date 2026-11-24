@@ -16,12 +16,15 @@ export async function generateMetadata({params}) {
   const canonical = absoluteUrl('/news/'+a.slug);
   const title = a.seo_title || a.title;
   const description = a.seo_description || a.summary;
+  const {keywords,open_graph:og={},twitter={}} = a.seo_details || {};
+  const socialImage = og.image || a.image;
   return {
-    title, description,
+    title, description, keywords,
     alternates:{canonical},
-    openGraph:{type:'article',siteName,title,description,url:canonical,
-      locale:'ar_SA',authors:[absoluteUrl('/authors/editorial-team')],publishedTime:a.published_at,section:sections[a.category],images:[{url:a.image,alt:a.title}]},
-    twitter:{card:'summary_large_image',title,description,images:[a.image]}
+    openGraph:{type:'article',siteName,title:og.title || title,description:og.description || description,url:canonical,
+      locale:'ar_SA',authors:[absoluteUrl('/authors/editorial-team')],publishedTime:a.published_at,section:sections[a.category],images:[{url:socialImage,alt:og.image_alt || a.title}]},
+    twitter:{card:'summary_large_image',title:twitter.title || og.title || title,description:twitter.description || og.description || description,
+      images:[{url:twitter.image || socialImage,alt:twitter.image_alt || og.image_alt || a.title}]}
   };
 }
 export default async function Story({params}) {
@@ -34,7 +37,7 @@ export default async function Story({params}) {
   const author = 'فريق التحرير';
   const structured = {
     '@id':absoluteUrl('/news/'+a.slug+'#article'), '@type':'NewsArticle',
-    headline:a.title, description:a.seo_description || a.summary,
+    headline:a.title, description:a.seo_description || a.summary, keywords:a.seo_details?.keywords,
     image:[a.image,...(a.additional_images || []).map(photo=>photo.url)].map(url=>absoluteUrl(url) || url),
     datePublished:a.published_at, inLanguage:'ar', articleSection:sections[a.category],
     author:team,
