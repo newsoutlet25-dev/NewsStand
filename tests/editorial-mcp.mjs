@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import {renderToStaticMarkup} from 'react-dom/server';
+import {createElement} from 'react';
+import ArticleBody from '../app/news/article-body.mjs';
 import {randomBytes} from 'node:crypto';
 import {Client} from '@modelcontextprotocol/sdk/client/index.js';
 import {StreamableHTTPClientTransport} from '@modelcontextprotocol/sdk/client/streamableHttp.js';
@@ -38,6 +41,7 @@ try {
   assert.equal(data(await call('list_drafts',{})).length,1);
   assert.equal(data(await call('get_draft',{slug:'fixture'})).additional_images.length,1);
   const rewrite={slug:'fixture',version:1,title:'عنوان محرر',body:'النص بعد التحرير',summary:'الملخص',seo:{title:'عنوان البحث',description:'وصف البحث',keywords:['اختبار'],open_graph:{title:'عنوان المشاركة'},twitter:{description:'وصف المشاركة'}}};
+  rewrite.body='مقدمة\\n\\n## عنوان رئيسي فرعي\r\nفقرة\n### تفاصيل\n<script>alert(1)</script>';
   assert.equal(data(await call('save_draft',rewrite)).editorial_version,2);
   assert.equal(row.seo_details.open_graph.title,rewrite.seo.open_graph.title);
   assert.equal((await call('save_draft',rewrite)).isError,true);
@@ -45,6 +49,11 @@ try {
   assert.equal((await call('publish_draft',{slug:'fixture',version:1})).isError,true);
   const pub=data(await call('publish_draft',{slug:'fixture',version:2}));
   assert.equal(pub.status,'published');assert.equal(pub.url,'https://mshraq.com/news/fixture');
+  const stored=data(await call('get_article',{slug:'fixture'})).body;
+  assert.equal(stored,'مقدمة\n\n## عنوان رئيسي فرعي\nفقرة\n### تفاصيل\n<script>alert(1)</script>');
+  const render=body=>renderToStaticMarkup(createElement(ArticleBody,{body}));
+  assert.equal(render(stored),'<div class="reader-body"><p>مقدمة</p><h2>عنوان رئيسي فرعي</h2><p>فقرة</p><h3>تفاصيل</h3><p>&lt;script&gt;alert(1)&lt;/script&gt;</p></div>');
+  assert.equal(render('قديم\r\nفقرة\\n\\nأخرى'),'<div class="reader-body"><p>قديم</p><p>فقرة</p><p>أخرى</p></div>');
   assert.deepEqual(data(await call('publish_draft',{slug:'fixture',version:2})),pub);
   assert.deepEqual(data(await call('list_drafts',{})),[]);
   const ref=()=>({slug:row.slug,version:row.editorial_version});

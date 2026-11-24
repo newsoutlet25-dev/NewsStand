@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {notFound} from 'next/navigation';
 import {articleViewCount,findNews,listNews,sections,clock,sectionNews} from '../../../lib/news';
 import ViewCount from '../view-count';
+import ArticleBody from '../article-body.mjs';
 
 import Discussion from '../../discussion';
 import Published from '../../published';
@@ -60,7 +61,7 @@ export default async function Story({params}) {
         {a.lead_image_details?.caption && <figcaption>{a.lead_image_details.caption}</figcaption>}
         {a.lead_image_details?.description && <p>{a.lead_image_details.description}</p>}</figure>}
       <ArticleActions title={a.title} url={structured.mainEntityOfPage}/>
-      <div className="reader-body">{a.body.split(/\n+/).filter(Boolean).map((p,i)=><p key={i}>{p}</p>)}</div>
+      <ArticleBody body={a.body}/>
       {!!a.additional_images?.length && <section className="article-gallery" aria-label="صور الخبر">
         {a.additional_images.map((photo,index)=><figure key={index}>
           <img src={photo.url} alt={photo.alt ?? (photo.caption || a.title)} title={photo.title} loading="lazy"/>
