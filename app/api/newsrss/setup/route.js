@@ -44,7 +44,12 @@ export async function POST(req) {
       const tools = (await rpc('tools/list',{})).tools;
       const writer = createHmac('sha256',token).update('mshraq.com draft storage v1').digest('hex');
       result = {writerFingerprint:createHash('sha256').update(writer).digest('hex'),hasServerKey:Boolean(process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY),tools:tools.map(({name,description,inputSchema})=>({name,description,inputSchema})),subscription:await call('get_my_subscription'),webhook:await call('get_my_webhook')};
-    } else if (op==='register' && ['url','webhook_url','receiver_url','endpoint'].includes(field)) {
+    } else if (op==='sample') {
+      const unpack = res => JSON.parse(res.content[0].text);
+      const list = unpack(await call('list_articles',{limit:1}));
+      const item = (Array.isArray(list) ? list : list.items || list.articles || [])[0];
+      result = item?.id ? unpack(await call('get_article',{id:item.id})) : list;
+    } else if (op==='register' && field==='url') {
       result = {registered:await call('register_my_webhook',{[field]:receiver}),webhook:await call('get_my_webhook')};
     } else if (op==='verify') result=await call('get_my_webhook');
     else return new Response(null,{status:400});
