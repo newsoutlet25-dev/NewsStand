@@ -50,6 +50,12 @@ export async function POST(req) {
       const item = (Array.isArray(list) ? list : list.items || list.articles || [])[0];
       result = item?.id ? unpack(await call('get_article',{id:item.id})) : list;
     } else if (op==='register' && field==='url') {
+      const stamp = String(Math.floor(Date.now()/1000));
+      const body = JSON.stringify({type:'newsrss.articles',items:[]});
+      const signingKey = createHmac('sha256',token).update('NewsRSS webhook v1').digest('hex');
+      const digest = createHmac('sha256',signingKey).update(stamp+'.'+body).digest('hex');
+      const probe = await fetch(receiver,{method:'POST',redirect:'error',headers:{'Content-Type':'application/json','X-NewsRSS-Timestamp':stamp,'X-NewsRSS-Signature':'sha256='+digest},body});
+      if (!probe.ok || !Array.isArray((await probe.json()).saved_ids)) return Response.json({error:'Storage preflight failed'},{status:503});
       result = {registered:await call('register_my_webhook',{[field]:receiver}),webhook:await call('get_my_webhook')};
     } else if (op==='verify') result=await call('get_my_webhook');
     else return new Response(null,{status:400});
