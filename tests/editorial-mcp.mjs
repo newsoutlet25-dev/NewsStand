@@ -12,11 +12,15 @@ globalThis.fetch=async (input,init)=>{
   const req=new Request(input,init),url=new URL(req.url);
   assert.equal(url.origin,'https://db.invalid');
   assert.equal(url.pathname,'/rest/v1/articles');
-  const matches=['slug','editorial_version','published_at'].every(k=>{
+  const matches=['slug','editorial_version','published_at','deleted_at'].every(k=>{
     const filter=url.searchParams.get(k);
-    return !filter || (filter==='is.null'?row[k]===null:filter==='eq.'+row[k]);
+    return !filter || (filter==='is.null'?row[k]==null:filter==='eq.'+row[k]);
   });
   const single=req.headers.get('accept')?.includes('vnd.pgrst.object');
+  if(req.method==='POST') {
+    const created=await req.json();
+    return Response.json({...created,editorial_version:1,published_at:null},{status:201});
+  }
   if(req.method==='PATCH' && matches) Object.assign(row,await req.json());
   return Response.json(single ? (matches?row:null) : (matches?[row]:[]));
 };
@@ -30,7 +34,7 @@ try {
   await client.connect(transport);
   const call=async(name,args)=>(await client.callTool({name,arguments:args}));
   const data=r=>{assert.ok(!r.isError,r.content[0].text);return JSON.parse(r.content[0].text)};
-  assert.equal((await client.listTools()).tools.length,4);
+  assert.equal((await client.listTools()).tools.length,14);
   assert.equal(data(await call('list_drafts',{})).length,1);
   assert.equal(data(await call('get_draft',{slug:'fixture'})).additional_images.length,1);
   const rewrite={slug:'fixture',version:1,title:'عنوان محرر',body:'النص بعد التحرير',summary:'الملخص',seo:{title:'عنوان البحث',description:'وصف البحث',keywords:['اختبار'],open_graph:{title:'عنوان المشاركة'},twitter:{description:'وصف المشاركة'}}};
@@ -43,5 +47,25 @@ try {
   assert.equal(pub.status,'published');assert.equal(pub.url,'https://mshraq.com/news/fixture');
   assert.deepEqual(data(await call('publish_draft',{slug:'fixture',version:2})),pub);
   assert.deepEqual(data(await call('list_drafts',{})),[]);
+  const ref=()=>({slug:row.slug,version:row.editorial_version});
+  const date=row.published_at;
+  data(await call('update_article',{...ref(),changes:{tags:['محلي'],seo:{open_graph:{description:'مشاركة'}}}}));
+  assert.equal(row.seo_details.open_graph.title,rewrite.seo.open_graph.title);
+  assert.equal(row.seo_details.twitter.description,rewrite.seo.twitter.description);
+  assert.equal(row.title,rewrite.title);
+  data(await call('edit_article_images',{...ref(),operations:[
+    {op:'add',image:{url:'https://example.org/new.jpg',alt:'جديدة'}},
+    {op:'move',index:2,to:0},{op:'update',index:0,changes:{caption:'تعليق'}},{op:'remove',index:1}
+  ]}));
+  assert.equal(row.lead_image_details.alt,'جديدة');
+  assert.equal(row.lead_image_details.caption,'تعليق');
+  assert.equal(row.published_at,date);
+  assert.equal(row.slug,'fixture');
+  assert.equal(data(await call('delete_article',ref())).status,'trash');
+  assert.equal(data(await call('list_articles',{})).length,0);
+  assert.equal(data(await call('restore_article',ref())).published_at,date);
+  assert.equal(data(await call('unpublish_article',ref())).status,'draft');
+  assert.equal(data(await call('create_article',{title:'مقال اختباري',body:'نص',category:'sport',images:[]})).status,'draft');
+  assert.equal(data(await call('search_articles',{query:row.title}))[0].slug,'fixture');
   console.log('PASS: authenticated MCP handshake, discovery, read, edit, version conflict, publish, retry and list filtering');
 } finally {await client.close();globalThis.fetch=originalFetch}
