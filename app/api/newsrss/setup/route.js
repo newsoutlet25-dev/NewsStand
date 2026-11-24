@@ -4,7 +4,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 const endpoint = 'https://srv2038574.hstgr.cloud/news-service/mcp';
 const receiver = 'https://mshraq.com/api/newsrss';
-const verifier = 'f6dbd346f20b71f63d6fd230c5fc4516b9edb47cd5214cd160b543bc49425df7';
+const verifier = "4b16487b5fdb1c958c88d9589eb5fe28b42aecf9c6a3e1f413e1a76fcf045533";
 const expires = Date.parse('2026-11-24T14:47:00Z');
 
 async function client(token) {
