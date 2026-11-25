@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import {siteName, siteDescription} from '../lib/site';
+import {siteName} from '../lib/site';
 
 export default function Footer({demo}) {
   return <footer className="site-footer"><div className="wrap footer-grid">
-    <div className="footer-about"><Link className="brand" href="/">{siteName}<i/></Link><p>{siteDescription}</p>
+    <div className="footer-about"><Link className="brand" href="/">{siteName}<i/></Link>
       {demo && <small>نسخة تجريبية · مواد تحريرية توضيحية</small>}</div>
     <div><h2>عن الصحيفة</h2><ul>
       <li><Link href="/about">من نحن</Link></li>
